@@ -110,7 +110,7 @@
 
 ## 3.1.0
 
-* Added `automaticallyAnimateToCurrentLocation` to fix https://github.com/humazed/google_map_location_picker/issues/24
+* Added `automaticallyAnimateToCurrentLocation` to fix https://github.com/gopalcodexo/google_map_location_picker/issues/24
 
 ## 3.0.1
 
