@@ -23,7 +23,7 @@ class GoogleMapLocationPickerPlugin : FlutterPlugin, MethodCallHandler, Activity
         channel.setMethodCallHandler(this)
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+/*    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         if(activityBinding == null) {
             result.notImplemented()
             return
@@ -45,6 +45,53 @@ class GoogleMapLocationPickerPlugin : FlutterPlugin, MethodCallHandler, Activity
                 result.error("ERROR", e.toString(), null)
             }
         } else {
+            result.notImplemented()
+        }
+    }*/
+
+    override fun onMethodCall(call: MethodCall, result: Result) {
+        // Check if activityBinding is null, and if so, return notImplemented().
+        if (activityBinding == null) {
+            result.notImplemented()
+            return
+        }
+
+        // Check if the method being called is "getSigningCertSha1".
+        if (call.method == "getSigningCertSha1") {
+            try {
+                // Get the package name from the arguments. Since it's a nullable String, we need to handle null safely.
+                val packageName: String? = call.argument<String>("packageName")
+
+                if (packageName == null) {
+                    // If the package name is null, return an error.
+                    result.error("ERROR", "Package name is null", null)
+                    return
+                }
+
+                // Get the PackageInfo for the specified package.
+                val packageManager = activityBinding!!.activity.packageManager
+                val packageInfo: PackageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+
+                // Loop through the signatures (usually, there's only one signature).
+                for (signature in packageInfo.signatures) {
+                    // Calculate the SHA1 fingerprint of the signature.
+                    val md: MessageDigest = MessageDigest.getInstance("SHA1")
+                    md.update(signature.toByteArray())
+                    val bytes: ByteArray = md.digest()
+
+                    // Convert the SHA1 fingerprint to hexadecimal format.
+                    val bigInteger = BigInteger(1, bytes)
+                    val hex: String = String.format("%0" + (bytes.size shl 1) + "x", bigInteger)
+
+                    // Return the SHA1 fingerprint to Flutter.
+                    result.success(hex)
+                }
+            } catch (e: Exception) {
+                // If an exception occurs during the process, return an error.
+                result.error("ERROR", e.toString(), null)
+            }
+        } else {
+            // If the method called is not "getSigningCertSha1", return notImplemented().
             result.notImplemented()
         }
     }
