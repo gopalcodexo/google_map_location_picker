@@ -1,4 +1,4 @@
-group 'com.codexotest.google_map_location_picker'
+group 'com.humazed.google_map_location_picker'
 version '1.0-SNAPSHOT'
 
 buildscript {

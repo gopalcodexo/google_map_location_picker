@@ -1,4 +1,4 @@
-package com.codexotest.google_map_location_picker
+package com.humazed.google_map_location_picker
 
 import androidx.annotation.NonNull
 
