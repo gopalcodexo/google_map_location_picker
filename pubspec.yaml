@@ -45,7 +45,7 @@ flutter:
       # https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms
       # -------------------
       android:
-        package: com.humazed.google_map_location_picker
+        package: com.codexotest.google_map_location_picker
         pluginClass: GoogleMapLocationPickerPlugin
     # -------------------
 
